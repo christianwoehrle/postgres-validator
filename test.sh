@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-echo "sleep for 10 seconds to let the istio sidecar come up"
+echo "sleep for 10 seconds in case an istio sidecar has to come up"
 sleep 10
 
 echo "test postgres master and replica with URLs ${URL_MASTER} and ${URL_REPLICA}"
