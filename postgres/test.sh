@@ -1,7 +1,14 @@
 #!/usr/bin/env sh
 
+echo "URL for postgres Master: ${URL_MASTER}"
+echo "URL for postgres Replicat: ${URL_REPLICA}"
+
+
+
 echo "sleep for 10 seconds in case an istio sidecar has to come up"
 sleep 10
+
+
 
 echo "test postgres master and replica with URLs ${URL_MASTER} and ${URL_REPLICA}"
 
