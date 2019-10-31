@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postgres-cleanup
+  namespace: microservice-ce
+spec:
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      containers:
+      - name: postgres-client
+        image: christianwoehrle/postgres-validator
+        imagePullPolicy: Always
+        env:
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: postgres.ce-postgres.credentials
+        - name: URL_MASTER
+          value: ce-postgres
+        - name: URL_REPLICA
+          value: ce-postgres-repl
+        - name: USERNAME
+          value: postgres
+        command: ["/cleanup.sh"]
+        securityContext:
+          runAsUser: 1000
+      restartPolicy: Never
+    #args: ["postgresql://$(USERNAME):$(PASSWORD)@$(URL):5432/db"]
+
