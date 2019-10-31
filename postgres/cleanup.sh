@@ -1,4 +1,4 @@
-#/bin/sh
+#!/usr/bin/env sh
 
 
 psql -h ${URL_MASTER} -U ${USERNAME} -c "drop table posts" 
