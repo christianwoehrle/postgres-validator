@@ -51,7 +51,19 @@ then
 	exit 1
 fi
 
+psql -h ${URL_MASTER} -U ${USERNAME} -c "commit;"
 echo "rows inserted at ${URL_MASTER}"
+if [ $? != 0 ]  
+then
+	echo "Error committing rows"
+	exit 1
+fi
+
+echo "rows committed at ${URL_MASTER}"
+
+
+
+
 
 psql -h ${URL_MASTER} -U ${USERNAME} -qat -c "select * from posts;" 
 
@@ -114,6 +126,16 @@ then
 fi
 
 echo "deleted rows in ${URL_MASTER} "
+psql -h ${URL_MASTER} -U ${USERNAME} -c "commit;"
+echo "commit  at ${URL_MASTER}"
+if [ $? != 0 ]  
+then
+        echo "Error committing"
+        exit 1
+fi
+
+echo "rows committed at ${URL_MASTER}"
+
 
 psql -h ${URL_MASTER} -U ${USERNAME} -c "drop table posts" 
 
