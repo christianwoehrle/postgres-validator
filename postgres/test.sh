@@ -53,7 +53,7 @@ fi
 
 echo "rows inserted at ${URL_MASTER}"
 
-RES=$(psql -h ${URL_MASTER} -U ${USERNAME} -qat -c "select * from posts;" | wc -l)
+psql -h ${URL_MASTER} -U ${USERNAME} -qat -c "select * from posts;" 
 
 if [ $? != 0 ]  
 then
@@ -61,17 +61,22 @@ then
 	exit 1
 fi
 
+
+
 echo "rows found at ${URL_MASTER}"
 
-if [ $RES != 4 ]  
+psql -h ${URL_MASTER} -U ${USERNAME} -qat -c "select * from posts;" > /tmp/t 
+ROWS=$(cat /tmp/t | wc -l)
+
+if [ $ROWS != 4 ]  
 then
-	echo "Expected 4 Rows, got $RES"
+	echo "Expected 4 Rows, got $ROWS"
 	exit 1
 fi
 
 echo "expected number of rows found at ${URL_MASTER}"
 
-RES=$(psql -h ${URL_REPLICA} -U ${USERNAME} -qat -c "select * from posts;" | wc -l)
+psql -h ${URL_REPLICA} -U ${USERNAME} -qat -c "select * from posts;" 
 
 if [ $? != 0 ]  
 then
@@ -79,9 +84,12 @@ then
 	exit 1
 fi
 
-if [ $RES != 4 ]  
+psql -h ${URL_REPLICA} -U ${USERNAME} -qat -c "select * from posts;"  > /tmp/t2
+ROWS2=$(cat /tmp/t2 | wc -l)
+
+if [ $ROWS2 != 4 ]  
 then
-	echo "Expected 4 Rows, got $RES"
+	echo "Expected 4 Rows, got $ROWS2"
 	exit 1
 fi
 
