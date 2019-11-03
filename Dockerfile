@@ -1,5 +1,5 @@
 FROM alpine:latest
-RUN apk --update add postgresql-client && rm -rf /var/cache/apk/*
+RUN apk --update add postgresql-client curl && rm -rf /var/cache/apk/*
 RUN addgroup -S pg && adduser -S pg -G pg  --uid 1000
 USER pg
 COPY postgres/test.sh /test.sh
