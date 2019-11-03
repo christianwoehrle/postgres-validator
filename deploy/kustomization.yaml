@@ -1,0 +1,12 @@
+resources:
+- base/test.yaml
+
+patchesStrategicMerge:
+- service-elastic-elasticsearch-discovery.yaml
+
+patchesJson6902:
+- target:
+    version: v1
+    kind: Service
+    name: elastic-elasticsearch-discovery
+  path: patch_service_elastic-elasticsearch-discovery.yaml

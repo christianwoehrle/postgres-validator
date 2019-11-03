@@ -1,8 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: postgres-cleanup
-  namespace: microservice-ce
+  name: postgres-sleep
 spec:
   backoffLimit: 3
   ttlSecondsAfterFinished: 300
@@ -17,14 +16,14 @@ spec:
           valueFrom:
             secretKeyRef:
               key: password
-              name: postgres.ce-postgres.credentials
+              name: postgres.ce-postgres-cw.credentials
         - name: URL_MASTER
-          value: ce-postgres
+          value: ce-postgres-cw
         - name: URL_REPLICA
-          value: ce-postgres-repl
+          value: ce-postgres-cw-repl
         - name: USERNAME
           value: postgres
-        command: ["/cleanup.sh"]
+        command: ["sleep", "3600"]
         securityContext:
           runAsUser: 1000
       restartPolicy: Never
