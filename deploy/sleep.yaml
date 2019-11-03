@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: postgres-sleep-${POSTGRES_DB_NAME}
+  name: postgres-sleep
 spec:
   backoffLimit: 3
   ttlSecondsAfterFinished: 300
