@@ -21,6 +21,6 @@ sleep 1
 echo "."
 sleep 1
 echo "=================="
-kubectl logs -f -ljob-name=postgres-test_${POSTGRES_DB_NAME} --all-containers=true
+kubectl logs -f -ljob-name=postgres-test-${POSTGRES_DB_NAME} --all-containers=true
 
 
