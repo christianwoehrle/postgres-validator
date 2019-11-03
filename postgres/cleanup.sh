@@ -21,6 +21,11 @@ then
 	exit 1
 fi
 
+
+echo "stop istio sidecar container"
+curl -X POST localhost:15000/quitquitquit
+
 echo "success"
+
 exit 0
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env sh
-#docker run -it --rm christianwoehrle/postgres-validator -env URL_MASTER=ce-postgres -env URL_REPLICA=ce-postgres-repl
 
+export POSTGRES_DB_NAME="${POSTGRES_DB_NAME:-ce-postgres}"
 NAMESPACE="${NAMESPACE:-microservice-ce}"
 
-kubectl apply -f sleep.yaml -n ${NAMESPACE}
+envsubst < sleep.yaml  | kubectl apply  -n ${NAMESPACE} -f -
+
 
 

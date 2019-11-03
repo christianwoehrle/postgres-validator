@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: postgres-sleep
+  name: postgres-sleep-${POSTGRES_DB_NAME}
 spec:
   backoffLimit: 3
   ttlSecondsAfterFinished: 300
@@ -16,16 +16,15 @@ spec:
           valueFrom:
             secretKeyRef:
               key: password
-              name: postgres.ce-postgres-cw.credentials
+              name: postgres.${POSTGRES_DB_NAME}.credentials
         - name: URL_MASTER
-          value: ce-postgres-cw
+          value: ${POSTGRES_DB_NAME}
         - name: URL_REPLICA
-          value: ce-postgres-cw-repl
+          value: ${POSTGRES_DB_NAME}-repl
         - name: USERNAME
           value: postgres
         command: ["sleep", "3600"]
         securityContext:
           runAsUser: 1000
       restartPolicy: Never
-    #args: ["postgresql://$(USERNAME):$(PASSWORD)@$(URL):5432/db"]
 

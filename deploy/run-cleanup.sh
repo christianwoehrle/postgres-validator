@@ -1,10 +1,11 @@
 #!/usr/bin/env sh
-#docker run -it --rm christianwoehrle/postgres-validator -env URL_MASTER=ce-postgres -env URL_REPLICA=ce-postgres-repl
 
+export POSTGRES_DB_NAME="${POSTGRES_DB_NAME:-ce-postgres}"
 NAMESPACE="${NAMESPACE:-microservice-ce}"
 
-kubectl delete -f cleanup.yaml -n ${NAMESPACE} 2> /dev/null
-kubectl apply -f cleanup.yaml -n ${NAMESPACE}
+envsubst < cleanup.yaml  | kubectl delete -n ${NAMESPACE} -f -
+envsubst < cleanup.yaml  | kubectl apply  -n ${NAMESPACE} -f -
+
 
 echo "echo show logs in a second, exist with ctrl-c"
 sleep 1
@@ -15,5 +16,5 @@ sleep 1
 echo "."
 
 
-kubectl logs -f -ljob-name=postgres-cleanup --all-containers=true
+kubectl logs -f -ljob-name=postgres-cleanup-${POSTGRES_DB_NAME=} --all-containers=true
 

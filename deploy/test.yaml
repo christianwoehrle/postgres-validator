@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: postgres-test
+  name: postgres-test-${POSTGRES_DB_NAME}
 spec:
   backoffLimit: 3
   ttlSecondsAfterFinished: 300
@@ -16,11 +16,11 @@ spec:
           valueFrom:
             secretKeyRef:
               key: password
-              name: postgres.ce-postgres.credentials
+              name: postgres.${POSTGRES_DB_NAME}.credentials
         - name: URL_MASTER
-          value: ce-postgres
+          value: ${POSTGRES_DB_NAME}
         - name: URL_REPLICA
-          value: ce-postgres-repl
+          value: ${POSTGRES_DB_NAME}-repl
         - name: USERNAME
           value: postgres
         command: ["/test.sh"]
